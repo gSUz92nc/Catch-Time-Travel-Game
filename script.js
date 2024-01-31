@@ -24,13 +24,40 @@ let player = {
     speed: 15 // pixels per frame
 }
 
+gameState = "menu"; // This variable stores the current state of the game, this is used to determine what to draw on the screen
+
+// This function is called every frame
 function draw() {
     if (!firstRun) {
         initiliseVariable();
         firstRun = true;
     }
-    background(220);
-    gameLoop();
+    if (gameState == "menu") {
+        drawMenu();
+    } else {
+        background(220);
+        gameLoop();
+    }
+}
+
+function drawMenu() {
+    background(10);
+    fill(255);
+    textAlign(CENTER);
+    textSize(50);
+    text("Game (fix text)", windowWidth / 2, windowHeight / 2 - 150);
+    drawButton("Play", windowWidth / 2, windowHeight / 2 - 50);
+}
+
+// This function draws a button with the given text and position
+function drawButton(buttonText, xPos, yPos) {
+    rectMode(CENTER);
+    fill(0);
+    rect(xPos, yPos, 100, 50);
+    fill(255);
+    textAlign(CENTER);
+    textSize(20);
+    text(buttonText, xPos, yPos);
 }
 
 function gameLoop() {
