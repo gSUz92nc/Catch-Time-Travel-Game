@@ -1,4 +1,3 @@
-
 let flag_bg; // This variable stores the background image for the menu
 let score = 0; // This variable stores the player's score
 
@@ -18,7 +17,7 @@ let firstRun = false; // This variable is used to check if the game has been run
 // This function is called when the game is run for the first time and when the window is resized
 function initiliseVariable() {
 
-    flag_bg = loadImage("the_reapist.jpg");
+    flag_bg = loadImage("/images/the_reapist.jpg");
 
     player.yPos = windowHeight - 65;
     player.xPos = windowWidth / 2;
