@@ -1,5 +1,6 @@
 let flag_bg; // This variable stores the background image for the menu
 let score = 0; // This variable stores the player's score
+let miss = 0;
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
@@ -173,6 +174,7 @@ function spawnObjects(probability) {
     for (let i = 0; i < onScreenObjects.length; i++) {
         if (onScreenObjects[i].yPos > windowHeight + 100) {
             onScreenObjects.splice(i, 1);
+            miss++; 
         }
     }
 
