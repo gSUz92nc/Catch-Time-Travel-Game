@@ -2,6 +2,9 @@ let flag_bg; // This variable stores the background image for the menu
 let score = 0; // This variable stores the player's score
 let miss = 0;
 
+// Initialise images 
+let oilBarrelImage
+
 function setup() {
     createCanvas(windowWidth, windowHeight);
 }
@@ -19,6 +22,7 @@ let firstRun = false; // This variable is used to check if the game has been run
 function initiliseVariable() {
 
     flag_bg = loadImage("/images/the_reapist.jpg");
+    oilBarrelImage = loadImage("/images/oil_barrel.webp");
 
     player.yPos = windowHeight - 65;
     player.xPos = windowWidth / 2;
@@ -174,7 +178,6 @@ function drawPlayer(xPos, yPos) {
     ellipse(xPos, yPos, 50, 50);
 }
 
-
 let onScreenObjects = []; // This array is used for storing data about the objects for collision detection and movement
 let lastSpawnTime = 0; // Variable to store the timestamp of the last object spawn, used for making sure objects aren't spawned too close together
 
@@ -184,12 +187,17 @@ function spawnObjects(probability) {
     if (Math.random() < probability & currentTime - lastSpawnTime > 500) {
         const timeSinceLastSpawn = currentTime - lastSpawnTime;
         const spawnXPos = timeSinceLastSpawn < 1000 ? (Math.random() - 0.5) * windowWidth / 20 + player.xPos : Math.random() * (windowWidth - 100) + 50;
+        // Randomly select a object from the objects array and push it to the onScreenObjects array
+        const randomObject = objects[Math.floor(Math.random() * objects.length)];
+
         onScreenObjects.push({
             xPos: spawnXPos,
             yPos: 0,
-            speed: 5,
-            width: 100,
-            height: 100,
+            speed: randomObject.speed,
+            width: randomObject.width,
+            height: randomObject.height,
+            name: randomObject.name,
+            image: randomObject.image
         });
         lastSpawnTime = currentTime;
     }
@@ -214,12 +222,27 @@ function spawnObjects(probability) {
     }
 }
 
+// This array contains all the objects that can spawn with their properties
+const objects = [
+{
+    name: "oil_barrel",
+    image: "oilBarrelImage",
+    width: 58,
+    height: 100,
+    speed: 5
+}]
+
 // This function draws the objects
 function drawObjects() {
     for (let i = 0; i < onScreenObjects.length; i++) {
         onScreenObjects[i].yPos += onScreenObjects[i].speed;
-        fill(255, 0, 0);
-        ellipse(onScreenObjects[i].xPos, onScreenObjects[i].yPos, 50, 50);
+        if (onScreenObjects[i].image == "oilBarrelImage") {
+            imageMode(CENTER);
+            image(oilBarrelImage, onScreenObjects[i].xPos, onScreenObjects[i].yPos, onScreenObjects[i].width, onScreenObjects[i].height, )
+        } else {
+            fill(255, 0, 0);
+            ellipse(onScreenObjects[i].xPos, onScreenObjects[i].yPos, 50, 50);
+        }
     }
 }
 
