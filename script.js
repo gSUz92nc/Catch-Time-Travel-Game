@@ -39,11 +39,11 @@ function draw() {
         initiliseVariable();
         firstRun = true;
     }
-    // else if (miss > 4) {
-    //     changeGameState("end");
-    //     miss = 0;
-    //     drawEndScreen();
-    // }
+    else if (miss > 4) {
+        changeGameState("end");
+        miss = 0;
+        drawEndScreen();
+    }
     else if (gameState == "menu") {
         drawMenu();
     }
