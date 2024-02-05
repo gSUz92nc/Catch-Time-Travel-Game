@@ -42,6 +42,7 @@ function draw() {
     else if (miss > 4) {
         changeGameState("end");
         miss = 0;
+        drawEndScreen();
     }
     else if (gameState == "menu") {
         drawMenu();
@@ -63,6 +64,7 @@ function deleteHTMLElements() {
 // This function is called when the game state changes
 function changeGameState(newState) {
     gameState = newState;
+    playButtonCreated = false; // Reset the flag to indicate that the play button is not created
     deleteCustomHTMLElements();
 }
 
@@ -221,5 +223,7 @@ function drawEndScreen() {
     textSize(50);
     text("Game Over", windowWidth / 2, windowHeight / 2 - 150);
     text("Score: " + score, windowWidth / 2, windowHeight / 2 - 50);
+    console.log("Draw")
     drawButton("Play Again");
+    console.log("Draw 1")
 }
