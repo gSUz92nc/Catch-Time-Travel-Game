@@ -228,7 +228,5 @@ function drawEndScreen() {
     textSize(50);
     text("Game Over", windowWidth / 2, windowHeight / 2 - 150);
     text("Score: " + score, windowWidth / 2, windowHeight / 2 - 50);
-    console.log("Draw")
     drawButton("Play Again");
-    console.log("Draw 1")
 }
