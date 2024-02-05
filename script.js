@@ -39,11 +39,11 @@ function draw() {
         initiliseVariable();
         firstRun = true;
     }
-    else if (miss > 4) {
-        changeGameState("end");
-        miss = 0;
-        drawEndScreen();
-    }
+    // else if (miss > 4) {
+    //     changeGameState("end");
+    //     miss = 0;
+    //     drawEndScreen();
+    // }
     else if (gameState == "menu") {
         drawMenu();
     }
@@ -136,7 +136,7 @@ function gameLoop() {
     fill(0, 0, 0);
     textAlign(LEFT);
     textSize(50);
-    text("misses: "  + miss, windowWidth - 1830, 50 ); 
+    text("misses: "  + miss, 20, 50 ); 
 }
 
 let acceleration = 1; // The acceleration value
@@ -187,7 +187,9 @@ function spawnObjects(probability) {
         onScreenObjects.push({
             xPos: spawnXPos,
             yPos: 0,
-            speed: 5
+            speed: 5,
+            width: 100,
+            height: 100,
         });
         lastSpawnTime = currentTime;
     }
@@ -203,8 +205,8 @@ function spawnObjects(probability) {
 
     // Check for collision
     for (let i = 0; i < onScreenObjects.length; i++) {
-        if (onScreenObjects[i].yPos > player.yPos - 50 && onScreenObjects[i].yPos < player.yPos + 50) {
-            if (onScreenObjects[i].xPos > player.xPos - 50 && onScreenObjects[i].xPos < player.xPos + 50) {
+        if (onScreenObjects[i].yPos > player.yPos - (onScreenObjects[i].height / 2) && onScreenObjects[i].yPos < player.yPos + (onScreenObjects[i].height / 2)) {
+            if (onScreenObjects[i].xPos > player.xPos - (onScreenObjects[i].width / 2) && onScreenObjects[i].xPos < player.xPos + (onScreenObjects[i].width / 2)) {
                 score++;
                 onScreenObjects.splice(i, 1);
             }
