@@ -113,13 +113,7 @@ function drawButton() {
 }
 
 // This function is called every frame when the game state is "game"
-<<<<<<< Updated upstream
-function gameLoop() {
-=======
 function gameLoop() {   
-   
-    
->>>>>>> Stashed changes
     playerMovement();
     spawnObjects(0.02);
     drawPlayer(player.xPos, player.yPos); 
@@ -128,6 +122,11 @@ function gameLoop() {
     textAlign(RIGHT);
     textSize(50);
     text("score: " + score, windowWidth - 20, 50 ); 
+
+    fill(0, 0, 0);
+    textAlign(LEFT);
+    textSize(50);
+    text("misses: "  + miss, windowWidth - 1830, 50 ); 
 }
 
 let acceleration = 1; // The acceleration value
