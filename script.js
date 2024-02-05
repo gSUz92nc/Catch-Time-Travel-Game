@@ -31,7 +31,7 @@ let player = {
     speed: 15 // pixels per frame
 }
 
-let gameState = "end"; // This variable stores the current state of the game, this is used to determine what to draw on the screen
+let gameState = "menu"; // This variable stores the current state of the game, this is used to determine what to draw on the screen
 
 // This function is called every frame
 function draw() {
