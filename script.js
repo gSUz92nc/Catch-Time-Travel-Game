@@ -113,7 +113,7 @@ function drawButton() {
 }
 
 // This function is called every frame when the game state is "game"
-function gameLoop() {   
+function gameLoop() {
     playerMovement();
     spawnObjects(0.02);
     drawPlayer(player.xPos, player.yPos);
@@ -125,20 +125,23 @@ currentDirection = "none"; // The current direction of the player
 
 // This function is called every frame to move the player
 function playerMovement() {
-    if (keyIsDown(LEFT_ARROW) && player.xPos - 50 > 0) {
+    if ((keyIsDown(LEFT_ARROW) || keyIsDown(65)) && player.xPos - 50 > 0) {
         if (currentDirection !== "left") {
             player.speed = 0; // Reset speed when changing direction
             currentDirection = "left";
         }
         player.speed = Math.min(player.speed + acceleration, maxSpeed); // Increase speed with acceleration
         player.xPos -= player.speed;
-    } else if (keyIsDown(RIGHT_ARROW) && player.xPos + 50 < width) {
+    } else if ((keyIsDown(RIGHT_ARROW) || keyIsDown(68)) && player.xPos + 50 < width) {
         if (currentDirection !== "right") {
             player.speed = 0; // Reset speed when changing direction
             currentDirection = "right";
         }
         player.speed = Math.min(player.speed + acceleration, maxSpeed); // Increase speed with acceleration
         player.xPos += player.speed;
+    } else if (mouseIsPressed && mouseY > windowHeight / 2) {
+        // If the player is using a touch screen, move the player based on the touch position
+        player.xPos = mouseX;
     } else {
         player.speed = 0; // Reset speed when no arrow key is pressed
         currentDirection = "none";
