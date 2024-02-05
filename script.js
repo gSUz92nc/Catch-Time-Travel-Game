@@ -31,7 +31,7 @@ let player = {
     speed: 15 // pixels per frame
 }
 
-let gameState = "menu"; // This variable stores the current state of the game, this is used to determine what to draw on the screen
+let gameState = "end"; // This variable stores the current state of the game, this is used to determine what to draw on the screen
 
 // This function is called every frame
 function draw() {
@@ -39,8 +39,14 @@ function draw() {
         initiliseVariable();
         firstRun = true;
     }
+    if (miss > 4) {
+        changeGameState("end");
+    }
     if (gameState == "menu") {
         drawMenu();
+    } 
+    if (gameState == "end") {
+        drawEndScreen();  
     } else {
         background(220);
         gameLoop();
@@ -65,6 +71,7 @@ function deleteCustomHTMLElements() {
     elements.forEach(element => element.remove());
 }
 
+// This function is called every frame when the game state is "menu"
 function drawMenu() {
     background(flag_bg);
     fill(66, 66, 255);
@@ -77,13 +84,13 @@ function drawMenu() {
 let playButtonCreated = false; // Variable to track if the play button is already created
 
 // This function draws a button with the given text and position
-function drawButton() {
+function drawButton(buttonText) {
     if (!playButtonCreated) { // Check if the play button is already created
         // Create a new button
         var playButton = document.createElement("button");
 
         // Set the button's text
-        playButton.innerHTML = "Play";
+        playButton.innerHTML = buttonText;
 
         // Set the button's position and style
         playButton.style.position = "fixed";
@@ -113,13 +120,7 @@ function drawButton() {
 }
 
 // This function is called every frame when the game state is "game"
-<<<<<<< Updated upstream
-function gameLoop() {
-=======
 function gameLoop() {   
-   
-    
->>>>>>> Stashed changes
     playerMovement();
     spawnObjects(0.02);
     drawPlayer(player.xPos, player.yPos); 
@@ -210,4 +211,14 @@ function drawObjects() {
         fill(255, 0, 0);
         ellipse(onScreenObjects[i].xPos, onScreenObjects[i].yPos, 50, 50);
     }
+}
+
+function drawEndScreen() {
+    background(220);
+    fill(66, 66, 255);
+    textAlign(CENTER);
+    textSize(50);
+    text("Game Over", windowWidth / 2, windowHeight / 2 - 150);
+    text("Score: " + score, windowWidth / 2, windowHeight / 2 - 50);
+    drawButton("Play Again");
 }
