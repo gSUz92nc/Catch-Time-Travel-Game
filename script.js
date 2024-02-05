@@ -132,6 +132,11 @@ function gameLoop() {
     textAlign(RIGHT);
     textSize(50);
     text("score: " + score, windowWidth - 20, 50);
+
+    fill(0, 0, 0);
+    textAlign(LEFT);
+    textSize(50);
+    text("misses: "  + miss, windowWidth - 1830, 50 ); 
 }
 
 let acceleration = 1; // The acceleration value
