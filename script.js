@@ -31,7 +31,7 @@ let player = {
     speed: 15 // pixels per frame
 }
 
-let gameState = "end"; // This variable stores the current state of the game, this is used to determine what to draw on the screen
+let gameState = "menu"; // This variable stores the current state of the game, this is used to determine what to draw on the screen
 
 // This function is called every frame
 function draw() {
@@ -39,14 +39,15 @@ function draw() {
         initiliseVariable();
         firstRun = true;
     }
-    if (miss > 4) {
+    else if (miss > 4) {
         changeGameState("end");
+        miss = 0;
     }
-    if (gameState == "menu") {
+    else if (gameState == "menu") {
         drawMenu();
-    } 
-    if (gameState == "end") {
-        drawEndScreen();  
+    }
+    else if (gameState == "end") {
+        drawEndScreen();
     } else {
         background(220);
         gameLoop();
@@ -79,7 +80,7 @@ function drawMenu() {
     textSize(50);
     text("Game Name Text", windowWidth / 2, windowHeight / 2 - 150);
     drawButton("Play", windowWidth / 2, windowHeight / 2 - 50);
-}   
+}
 
 let playButtonCreated = false; // Variable to track if the play button is already created
 
@@ -107,7 +108,7 @@ function drawButton(buttonText) {
         playButton.style.boxShadow = "0px 2px 4px rgba(0, 0, 0, 0.3)";
 
         // Add an event listener to the button
-        playButton.addEventListener("click", function() {
+        playButton.addEventListener("click", function () {
             // The "Play" button was pressed
             changeGameState("game")
         });
@@ -120,15 +121,15 @@ function drawButton(buttonText) {
 }
 
 // This function is called every frame when the game state is "game"
-function gameLoop() {   
+function gameLoop() {
     playerMovement();
     spawnObjects(0.02);
-    drawPlayer(player.xPos, player.yPos); 
-    
+    drawPlayer(player.xPos, player.yPos);
+
     fill(0, 0, 0);
     textAlign(RIGHT);
     textSize(50);
-    text("score: " + score, windowWidth - 20, 50 ); 
+    text("score: " + score, windowWidth - 20, 50);
 
     fill(0, 0, 0);
     textAlign(LEFT);
@@ -194,7 +195,7 @@ function spawnObjects(probability) {
     for (let i = 0; i < onScreenObjects.length; i++) {
         if (onScreenObjects[i].yPos > windowHeight + 100) {
             onScreenObjects.splice(i, 1);
-            miss++; 
+            miss++;
         }
     }
 
