@@ -10,11 +10,17 @@ let flag_bg;
 let RAAAAHHHHHH;
 
 function setup() {
+    // Load Images
+    flag_bg = loadImage("/images/the_reapist.jpg");
+    oilBarrelImage = loadImage("/images/oil_barrel.webp");
+    mainBGImage = loadImage("/images/main_bg.jpg");
 
     // Load Sounds
     RAAAAHHHHHH = loadSound("/sounds/EagleSound.mp3");
 
-    initiliseVariable()
+    // Set the player's initial position
+    player.yPos = windowHeight - 65;
+    player.xPos = windowWidth / 2;
 
     createCanvas(windowWidth, windowHeight);
 }
@@ -22,19 +28,8 @@ function setup() {
 // This function is called when the window is resized
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight); // Self explanatory
-    initiliseVariable(); // This function is called when the window is resized to re-initilise the variables, this is useful for responsive design
-}
 
-// This function is called when the game is run for the first time and when the window is resized
-function initiliseVariable() {
-
-    // Load Images
-    flag_bg = loadImage("/images/the_reapist.jpg");
-    oilBarrelImage = loadImage("/images/oil_barrel.webp");
-    mainBGImage = loadImage("/images/main_bg.jpg");
-
-
-
+    // Reinitialise the player's position
     player.yPos = windowHeight - 65;
     player.xPos = windowWidth / 2;
 }
