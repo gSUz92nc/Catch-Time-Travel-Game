@@ -1,11 +1,21 @@
-let flag_bg; // This variable stores the background image for the menu
 let score = 0; // This variable stores the player's score
 let miss = 0;
 
 // Initialise images 
-let oilBarrelImage
+let oilBarrelImage;
+let mainBGImage;
+let flag_bg;
+
+// Initialise sounds
+let RAAAAHHHHHH;
 
 function setup() {
+
+    // Load Sounds
+    RAAAAHHHHHH = loadSound("/sounds/EagleSound.mp3");
+
+    initiliseVariable()
+
     createCanvas(windowWidth, windowHeight);
 }
 
@@ -15,14 +25,15 @@ function windowResized() {
     initiliseVariable(); // This function is called when the window is resized to re-initilise the variables, this is useful for responsive design
 }
 
-
-let firstRun = false; // This variable is used to check if the game has been run before and if not, run the initiliseVariable() function
-
 // This function is called when the game is run for the first time and when the window is resized
 function initiliseVariable() {
 
+    // Load Images
     flag_bg = loadImage("/images/the_reapist.jpg");
     oilBarrelImage = loadImage("/images/oil_barrel.webp");
+    mainBGImage = loadImage("/images/main_bg.jpg");
+
+
 
     player.yPos = windowHeight - 65;
     player.xPos = windowWidth / 2;
@@ -39,11 +50,7 @@ let gameState = "menu"; // This variable stores the current state of the game, t
 
 // This function is called every frame
 function draw() {
-    if (!firstRun) {
-        initiliseVariable();
-        firstRun = true;
-    }
-    else if (miss > 4) {
+    if (miss > 4) {
         changeGameState("end");
         miss = 0;
         drawEndScreen();
@@ -128,6 +135,10 @@ function drawButton(buttonText) {
 
 // This function is called every frame when the game state is "game"
 function gameLoop() {
+
+    imageMode(CORNER);
+    background(mainBGImage);
+
     playerMovement();
     spawnObjects(0.02);
     drawPlayer(player.xPos, player.yPos);
@@ -140,7 +151,7 @@ function gameLoop() {
     fill(0, 0, 0);
     textAlign(LEFT);
     textSize(50);
-    text("misses: "  + miss, 20, 50 ); 
+    text("misses: " + miss, 20, 50);
 }
 
 let acceleration = 1; // The acceleration value
@@ -217,6 +228,7 @@ function spawnObjects(probability) {
             if (onScreenObjects[i].xPos > player.xPos - (onScreenObjects[i].width / 2) && onScreenObjects[i].xPos < player.xPos + (onScreenObjects[i].width / 2)) {
                 score++;
                 onScreenObjects.splice(i, 1);
+                RAAAAHHHHHH.play();
             }
         }
     }
@@ -224,13 +236,13 @@ function spawnObjects(probability) {
 
 // This array contains all the objects that can spawn with their properties
 const objects = [
-{
-    name: "oil_barrel",
-    image: "oilBarrelImage",
-    width: 58,
-    height: 100,
-    speed: 5
-}]
+    {
+        name: "oil_barrel",
+        image: "oilBarrelImage",
+        width: 58,
+        height: 100,
+        speed: 5
+    }]
 
 // This function draws the objects
 function drawObjects() {
@@ -238,7 +250,7 @@ function drawObjects() {
         onScreenObjects[i].yPos += onScreenObjects[i].speed;
         if (onScreenObjects[i].image == "oilBarrelImage") {
             imageMode(CENTER);
-            image(oilBarrelImage, onScreenObjects[i].xPos, onScreenObjects[i].yPos, onScreenObjects[i].width, onScreenObjects[i].height, )
+            image(oilBarrelImage, onScreenObjects[i].xPos, onScreenObjects[i].yPos, onScreenObjects[i].width, onScreenObjects[i].height,)
         } else {
             fill(255, 0, 0);
             ellipse(onScreenObjects[i].xPos, onScreenObjects[i].yPos, 50, 50);
