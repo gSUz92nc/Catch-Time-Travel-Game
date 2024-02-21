@@ -117,6 +117,10 @@ function drawButton(buttonText) {
 
         // Add an event listener to the button
         playButton.addEventListener("click", function () {
+
+            score = 0; // Reset the score when the game starts
+            miss = 0; // Reset the miss when the game starts
+
             // The "Play" button was pressed
             changeGameState("game")
         });
