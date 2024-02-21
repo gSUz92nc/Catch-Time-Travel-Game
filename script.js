@@ -1,156 +1,160 @@
 let score = 0; // This variable stores the player's score
 let miss = 0;
 
-// Initialise images 
+// Initialise images
 let oilBarrelImage;
 let mainBGImage;
 let flag_bg;
 
 // Initialise sounds
 let RAAAAHHHHHH;
+let music;
 
 function setup() {
-    // Load Images
-    flag_bg = loadImage("/images/the_reapist.jpg");
-    oilBarrelImage = loadImage("/images/oil_barrel.webp");
-    mainBGImage = loadImage("/images/main_bg.JPG");
+  // Load Images
+  flag_bg = loadImage("/images/the_reapist.jpg");
+  oilBarrelImage = loadImage("/images/oil_barrel.webp");
+  mainBGImage = loadImage("/images/main_bg.JPG");
 
-    // Load Sounds
-    RAAAAHHHHHH = loadSound("/sounds/EagleSound.mp3");
+  // Load Sounds
+  RAAAAHHHHHH = loadSound("/sounds/EagleSound.mp3");
+  music = loadSound("/sounds/music.mp3");
 
-    // Set the player's initial position
-    player.yPos = windowHeight - 65;
-    player.xPos = windowWidth / 2;
+  // Set the player's initial position
+  player.yPos = windowHeight - 65;
+  player.xPos = windowWidth / 2;
 
-    createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight);
 }
 
 // This function is called when the window is resized
 function windowResized() {
-    resizeCanvas(windowWidth, windowHeight); // Self explanatory
+  resizeCanvas(windowWidth, windowHeight); // Self explanatory
 
-    // Reinitialise the player's position
-    player.yPos = windowHeight - 65;
-    player.xPos = windowWidth / 2;
+  // Reinitialise the player's position
+  player.yPos = windowHeight - 65;
+  player.xPos = windowWidth / 2;
 }
 
 // This object stores the data about the player's position and speed
 let player = {
-    xPos: 0, // x coordinate of player (left and right)
-    yPos: 0, // y coordinate of player (up and down)
-    speed: 15 // pixels per frame
-}
+  xPos: 0, // x coordinate of player (left and right)
+  yPos: 0, // y coordinate of player (up and down)
+  speed: 15, // pixels per frame
+};
 
 let gameState = "menu"; // This variable stores the current state of the game, this is used to determine what to draw on the screen
 
 // This function is called every frame
 function draw() {
-    if (miss > 4) {
-        changeGameState("end");
-        miss = 0;
-        drawEndScreen();
+  if (miss > 4) {
+    changeGameState("end");
+    miss = 0;
+    drawEndScreen();
+  } else if (gameState == "menu") {
+    drawMenu();
+  } else if (gameState == "end") {
+    drawEndScreen();
+  } else {
+    // Check if the music is playing
+    if (!music.isPlaying()) {
+      music.play();
     }
-    else if (gameState == "menu") {
-        drawMenu();
-    }
-    else if (gameState == "end") {
-        drawEndScreen();
-    } else {
-        background(220);
-        gameLoop();
-    }
+
+    background(220);
+    gameLoop();
+  }
 }
 
 // This function deletes all HTML elements on the screen
 function deleteHTMLElements() {
-    const elements = document.querySelectorAll("*");
-    elements.forEach(element => element.remove());
+  const elements = document.querySelectorAll("*");
+  elements.forEach((element) => element.remove());
 }
 
 // This function is called when the game state changes
 function changeGameState(newState) {
-    gameState = newState;
-    playButtonCreated = false; // Reset the flag to indicate that the play button is not created
-    deleteCustomHTMLElements();
+  gameState = newState;
+  playButtonCreated = false; // Reset the flag to indicate that the play button is not created
+  deleteCustomHTMLElements();
 }
 
 // This function deletes HTML elements created by our code
 function deleteCustomHTMLElements() {
-    const elements = document.querySelectorAll("button"); // Select only the buttons created by our code
-    elements.forEach(element => element.remove());
+  const elements = document.querySelectorAll("button"); // Select only the buttons created by our code
+  elements.forEach((element) => element.remove());
 }
 
 // This function is called every frame when the game state is "menu"
 function drawMenu() {
-    background(flag_bg);
-    fill(66, 66, 255);
-    textAlign(CENTER);
-    textSize(50);
-    text("Game Name Text", windowWidth / 2, windowHeight / 2 - 150);
-    drawButton("Play", windowWidth / 2, windowHeight / 2 - 50);
+  background(flag_bg);
+  fill(66, 66, 255);
+  textAlign(CENTER);
+  textSize(50);
+  text("Game Name Text", windowWidth / 2, windowHeight / 2 - 150);
+  drawButton("Play", windowWidth / 2, windowHeight / 2 - 50);
 }
 
 let playButtonCreated = false; // Variable to track if the play button is already created
 
 // This function draws a button with the given text and position
 function drawButton(buttonText) {
-    if (!playButtonCreated) { // Check if the play button is already created
-        // Create a new button
-        var playButton = document.createElement("button");
+  if (!playButtonCreated) {
+    // Check if the play button is already created
+    // Create a new button
+    var playButton = document.createElement("button");
 
-        // Set the button's text
-        playButton.innerHTML = buttonText;
+    // Set the button's text
+    playButton.innerHTML = buttonText;
 
-        // Set the button's position and style
-        playButton.style.position = "fixed";
-        playButton.style.left = "50%";
-        playButton.style.top = "50%";
-        playButton.style.transform = "translate(-50%, -50%)";
-        playButton.style.padding = "10px 20px";
-        playButton.style.border = "none";
-        playButton.style.borderRadius = "5px";
-        playButton.style.backgroundColor = "#4CAF50";
-        playButton.style.color = "white";
-        playButton.style.fontSize = "16px";
-        playButton.style.cursor = "pointer";
-        playButton.style.boxShadow = "0px 2px 4px rgba(0, 0, 0, 0.3)";
+    // Set the button's position and style
+    playButton.style.position = "fixed";
+    playButton.style.left = "50%";
+    playButton.style.top = "50%";
+    playButton.style.transform = "translate(-50%, -50%)";
+    playButton.style.padding = "10px 20px";
+    playButton.style.border = "none";
+    playButton.style.borderRadius = "5px";
+    playButton.style.backgroundColor = "#4CAF50";
+    playButton.style.color = "white";
+    playButton.style.fontSize = "16px";
+    playButton.style.cursor = "pointer";
+    playButton.style.boxShadow = "0px 2px 4px rgba(0, 0, 0, 0.3)";
 
-        // Add an event listener to the button
-        playButton.addEventListener("click", function () {
+    // Add an event listener to the button
+    playButton.addEventListener("click", function () {
+      score = 0; // Reset the score when the game starts
+      miss = 0; // Reset the miss when the game starts
 
-            score = 0; // Reset the score when the game starts
-            miss = 0; // Reset the miss when the game starts
+      // The "Play" button was pressed
+      changeGameState("game");
+    });
 
-            // The "Play" button was pressed
-            changeGameState("game")
-        });
+    // Add the button to the document
+    document.body.appendChild(playButton);
 
-        // Add the button to the document
-        document.body.appendChild(playButton);
-
-        playButtonCreated = true; // Set the flag to indicate that the play button is created
-    }
+    playButtonCreated = true; // Set the flag to indicate that the play button is created
+  }
 }
 
 // This function is called every frame when the game state is "game"
 function gameLoop() {
+  imageMode(CORNER);
+  background(mainBGImage);
 
-    imageMode(CORNER);
-    background(mainBGImage);
+  playerMovement();
+  spawnObjects(0.02);
+  drawPlayer(player.xPos, player.yPos);
 
-    playerMovement();
-    spawnObjects(0.02);
-    drawPlayer(player.xPos, player.yPos);
+  fill(0, 0, 0);
+  textAlign(RIGHT);
+  textSize(50);
+  text("score: " + score, windowWidth - 20, 50);
 
-    fill(0, 0, 0);
-    textAlign(RIGHT);
-    textSize(50);
-    text("score: " + score, windowWidth - 20, 50);
-
-    fill(0, 0, 0);
-    textAlign(LEFT);
-    textSize(50);
-    text("misses: " + miss, 20, 50);
+  fill(0, 0, 0);
+  textAlign(LEFT);
+  textSize(50);
+  text("misses: " + miss, 20, 50);
 }
 
 let acceleration = 1; // The acceleration value
@@ -159,33 +163,36 @@ currentDirection = "none"; // The current direction of the player
 
 // This function is called every frame to move the player
 function playerMovement() {
-    if ((keyIsDown(LEFT_ARROW) || keyIsDown(65)) && player.xPos - 50 > 0) {
-        if (currentDirection !== "left") {
-            player.speed = 0; // Reset speed when changing direction
-            currentDirection = "left";
-        }
-        player.speed = Math.min(player.speed + acceleration, maxSpeed); // Increase speed with acceleration
-        player.xPos -= player.speed;
-    } else if ((keyIsDown(RIGHT_ARROW) || keyIsDown(68)) && player.xPos + 50 < width) {
-        if (currentDirection !== "right") {
-            player.speed = 0; // Reset speed when changing direction
-            currentDirection = "right";
-        }
-        player.speed = Math.min(player.speed + acceleration, maxSpeed); // Increase speed with acceleration
-        player.xPos += player.speed;
-    } else if (mouseIsPressed && mouseY > windowHeight / 2) {
-        // If the player is using a touch screen, move the player based on the touch position
-        player.xPos = mouseX;
-    } else {
-        player.speed = 0; // Reset speed when no arrow key is pressed
-        currentDirection = "none";
+  if ((keyIsDown(LEFT_ARROW) || keyIsDown(65)) && player.xPos - 50 > 0) {
+    if (currentDirection !== "left") {
+      player.speed = 0; // Reset speed when changing direction
+      currentDirection = "left";
     }
+    player.speed = Math.min(player.speed + acceleration, maxSpeed); // Increase speed with acceleration
+    player.xPos -= player.speed;
+  } else if (
+    (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) &&
+    player.xPos + 50 < width
+  ) {
+    if (currentDirection !== "right") {
+      player.speed = 0; // Reset speed when changing direction
+      currentDirection = "right";
+    }
+    player.speed = Math.min(player.speed + acceleration, maxSpeed); // Increase speed with acceleration
+    player.xPos += player.speed;
+  } else if (mouseIsPressed && mouseY > windowHeight / 2) {
+    // If the player is using a touch screen, move the player based on the touch position
+    player.xPos = mouseX;
+  } else {
+    player.speed = 0; // Reset speed when no arrow key is pressed
+    currentDirection = "none";
+  }
 }
 
 // This function draws the player
 function drawPlayer(xPos, yPos) {
-    fill(255, 255, 255);
-    ellipse(xPos, yPos, 50, 50);
+  fill(255, 255, 255);
+  ellipse(xPos, yPos, 50, 50);
 }
 
 let onScreenObjects = []; // This array is used for storing data about the objects for collision detection and movement
@@ -193,76 +200,92 @@ let lastSpawnTime = 0; // Variable to store the timestamp of the last object spa
 
 // This function spawns things that the player has to catch. It's called every frame and spawns a new object based off probability
 function spawnObjects(probability) {
-    const currentTime = Date.now();
-    if (Math.random() < probability & currentTime - lastSpawnTime > 500) {
-        const timeSinceLastSpawn = currentTime - lastSpawnTime;
-        const spawnXPos = timeSinceLastSpawn < 1000 ? (Math.random() - 0.5) * windowWidth / 20 + player.xPos : Math.random() * (windowWidth - 100) + 50;
-        // Randomly select a object from the objects array and push it to the onScreenObjects array
-        const randomObject = objects[Math.floor(Math.random() * objects.length)];
+  const currentTime = Date.now();
+  if ((Math.random() < probability) & (currentTime - lastSpawnTime > 500)) {
+    const timeSinceLastSpawn = currentTime - lastSpawnTime;
+    const spawnXPos =
+      timeSinceLastSpawn < 1000
+        ? ((Math.random() - 0.5) * windowWidth) / 20 + player.xPos
+        : Math.random() * (windowWidth - 100) + 50;
+    // Randomly select a object from the objects array and push it to the onScreenObjects array
+    const randomObject = objects[Math.floor(Math.random() * objects.length)];
 
-        onScreenObjects.push({
-            xPos: spawnXPos,
-            yPos: 0,
-            speed: randomObject.speed,
-            width: randomObject.width,
-            height: randomObject.height,
-            name: randomObject.name,
-            image: randomObject.image
-        });
-        lastSpawnTime = currentTime;
-    }
-    drawObjects();
+    onScreenObjects.push({
+      xPos: spawnXPos,
+      yPos: 0,
+      speed: randomObject.speed,
+      width: randomObject.width,
+      height: randomObject.height,
+      name: randomObject.name,
+      image: randomObject.image,
+    });
+    lastSpawnTime = currentTime;
+  }
+  drawObjects();
 
-    // Remove objects that are off the screen
-    for (let i = 0; i < onScreenObjects.length; i++) {
-        if (onScreenObjects[i].yPos > windowHeight + 100) {
-            onScreenObjects.splice(i, 1);
-            miss++;
-        }
+  // Remove objects that are off the screen
+  for (let i = 0; i < onScreenObjects.length; i++) {
+    if (onScreenObjects[i].yPos > windowHeight + 100) {
+      onScreenObjects.splice(i, 1);
+      miss++;
     }
+  }
 
-    // Check for collision
-    for (let i = 0; i < onScreenObjects.length; i++) {
-        if (onScreenObjects[i].yPos > player.yPos - (onScreenObjects[i].height / 2) && onScreenObjects[i].yPos < player.yPos + (onScreenObjects[i].height / 2)) {
-            if (onScreenObjects[i].xPos > player.xPos - (onScreenObjects[i].width / 2) && onScreenObjects[i].xPos < player.xPos + (onScreenObjects[i].width / 2)) {
-                score++;
-                onScreenObjects.splice(i, 1);
-                RAAAAHHHHHH.play();
-            }
-        }
+  // Check for collision
+  for (let i = 0; i < onScreenObjects.length; i++) {
+    if (
+      onScreenObjects[i].yPos > player.yPos - onScreenObjects[i].height / 2 &&
+      onScreenObjects[i].yPos < player.yPos + onScreenObjects[i].height / 2
+    ) {
+      if (
+        onScreenObjects[i].xPos > player.xPos - onScreenObjects[i].width / 2 &&
+        onScreenObjects[i].xPos < player.xPos + onScreenObjects[i].width / 2
+      ) {
+        score++;
+        onScreenObjects.splice(i, 1);
+        RAAAAHHHHHH.play();
+      }
     }
+  }
 }
 
 // This array contains all the objects that can spawn with their properties
 const objects = [
-    {
-        name: "oil_barrel",
-        image: "oilBarrelImage",
-        width: 58,
-        height: 100,
-        speed: 5
-    }]
+  {
+    name: "oil_barrel",
+    image: "oilBarrelImage",
+    width: 58,
+    height: 100,
+    speed: 5,
+  },
+];
 
 // This function draws the objects
 function drawObjects() {
-    for (let i = 0; i < onScreenObjects.length; i++) {
-        onScreenObjects[i].yPos += onScreenObjects[i].speed;
-        if (onScreenObjects[i].image == "oilBarrelImage") {
-            imageMode(CENTER);
-            image(oilBarrelImage, onScreenObjects[i].xPos, onScreenObjects[i].yPos, onScreenObjects[i].width, onScreenObjects[i].height,)
-        } else {
-            fill(255, 0, 0);
-            ellipse(onScreenObjects[i].xPos, onScreenObjects[i].yPos, 50, 50);
-        }
+  for (let i = 0; i < onScreenObjects.length; i++) {
+    onScreenObjects[i].yPos += onScreenObjects[i].speed;
+    if (onScreenObjects[i].image == "oilBarrelImage") {
+      imageMode(CENTER);
+      image(
+        oilBarrelImage,
+        onScreenObjects[i].xPos,
+        onScreenObjects[i].yPos,
+        onScreenObjects[i].width,
+        onScreenObjects[i].height
+      );
+    } else {
+      fill(255, 0, 0);
+      ellipse(onScreenObjects[i].xPos, onScreenObjects[i].yPos, 50, 50);
     }
+  }
 }
 
 function drawEndScreen() {
-    background(220);
-    fill(66, 66, 255);
-    textAlign(CENTER);
-    textSize(50);
-    text("Game Over", windowWidth / 2, windowHeight / 2 - 150);
-    text("Score: " + score, windowWidth / 2, windowHeight / 2 - 50);
-    drawButton("Play Again");
+  background(220);
+  fill(66, 66, 255);
+  textAlign(CENTER);
+  textSize(50);
+  text("Game Over", windowWidth / 2, windowHeight / 2 - 150);
+  text("Score: " + score, windowWidth / 2, windowHeight / 2 - 50);
+  drawButton("Play Again");
 }
