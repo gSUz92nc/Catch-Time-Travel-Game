@@ -13,7 +13,7 @@ function setup() {
     // Load Images
     flag_bg = loadImage("/images/the_reapist.jpg");
     oilBarrelImage = loadImage("/images/oil_barrel.webp");
-    mainBGImage = loadImage("/images/main_bg.jpg");
+    mainBGImage = loadImage("/images/main_bg.JPG");
 
     // Load Sounds
     RAAAAHHHHHH = loadSound("/sounds/EagleSound.mp3");
