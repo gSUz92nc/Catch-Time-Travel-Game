@@ -256,7 +256,7 @@ const objects = [
     image: "oilBarrelImage",
     width: 58,
     height: 100,
-    speed: 5,
+    speed: 10,
   },
 ];
 
