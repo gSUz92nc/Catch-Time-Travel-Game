@@ -7,8 +7,9 @@ let mainBGImage;
 let flag_bg;
 
 // Initialise sounds
-let RAAAAHHHHHH;
-let music;
+
+//let RAAAAHHHHHH;
+//let music;
 
 function setup() {
   // Load Images
@@ -17,8 +18,8 @@ function setup() {
   mainBGImage = loadImage("/images/main_bg.JPG");
 
   // Load Sounds
-  RAAAAHHHHHH = loadSound("/sounds/EagleSound.mp3");
-  music = loadSound("/sounds/music.mp3");
+  // RAAAAHHHHHH = loadSound("/sounds/EagleSound.mp3");
+  // music = loadSound("/sounds/music.mp3");
 
   // Set the player's initial position
   player.yPos = windowHeight - 65;
@@ -57,9 +58,9 @@ function draw() {
     drawEndScreen();
   } else {
     // Check if the music is playing
-    if (!music.isPlaying()) {
-      music.play();
-    }
+    // if (!music.isPlaying()) {
+    //   music.play();
+    // }
 
     background(220);
     gameLoop();
@@ -91,7 +92,7 @@ function drawMenu() {
   fill(66, 66, 255);
   textAlign(CENTER);
   textSize(50);
-  text("Game Name Text", windowWidth / 2, windowHeight / 2 - 150);
+  text("Oil Catcher", windowWidth / 2, windowHeight / 2 - 150);
   drawButton("Play", windowWidth / 2, windowHeight / 2 - 50);
 }
 
@@ -243,7 +244,7 @@ function spawnObjects(probability) {
       ) {
         score++;
         onScreenObjects.splice(i, 1);
-        RAAAAHHHHHH.play();
+        // RAAAAHHHHHH.play();
       }
     }
   }
